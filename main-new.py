@@ -30,18 +30,18 @@ RED_HIT = pygame.USEREVENT + 2
 
 
 def draw_winner(text):
-    draw_text = WINNER_FONT.render(text, 1, (0,0,0))
+    draw_text = WINNER_FONT.render(text, True, (0, 0, 0))
     WIN.blit(draw_text, ((WIDTH//2 - draw_text.get_width()//2), (HEIGHT//2 - draw_text.get_height()//2)))
     pygame.display.update()
     pygame.time.delay(5000)
 
 
 def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_health):
-    WIN.fill((255,255,255))
-    pygame.draw.rect(WIN, (0,0,0), BORDER)
+    WIN.fill((255, 255, 255))
+    pygame.draw.rect(WIN, (0, 0, 0), BORDER)
 
-    red_health_text = HEALTH_FONT.render("Health: " + str(red_health), 1, (0,0,0))
-    yellow_health_text = HEALTH_FONT.render("Health: " + str(yellow_health), 1, (0,0,0))
+    red_health_text = HEALTH_FONT.render("Health: " + str(red_health), True, (0, 0, 0))
+    yellow_health_text = HEALTH_FONT.render("Health: " + str(yellow_health), True, (0, 0, 0))
 
     WIN.blit(red_health_text, (10, 10))
     WIN.blit(yellow_health_text, (WIDTH - red_health_text.get_width() - 10, 10))
@@ -50,33 +50,36 @@ def draw_window(red, yellow, red_bullets, yellow_bullets, red_health, yellow_hea
     WIN.blit(SECOND_SPACESHIP, (yellow.x, yellow.y))
 
     for bullet in red_bullets:
-        pygame.draw.rect(WIN, (255,0,0), bullet)
+        pygame.draw.rect(WIN, (255, 0, 0), bullet)
     for bullet in yellow_bullets:
-        pygame.draw.rect(WIN, (0,0,255), bullet)
+        pygame.draw.rect(WIN, (0, 0, 255), bullet)
 
     pygame.display.update()
 
+
 def yellow_handle_movement(keys, yellow):
     
-    if keys[pygame.K_a] and yellow.left - VELOCITY > (WIDTH - 10)/2: # LEFT
+    if keys[pygame.K_a] and yellow.left - VELOCITY > (WIDTH - 10)/2:  # LEFT
         yellow.x -= VELOCITY
-    if keys[pygame.K_d] and yellow.right + VELOCITY < WIDTH: # LEFT
+    if keys[pygame.K_d] and yellow.right + VELOCITY < WIDTH:  # LEFT
         yellow.x += VELOCITY
-    if keys[pygame.K_w] and yellow.top - VELOCITY > 0: # LEFT
+    if keys[pygame.K_w] and yellow.top - VELOCITY > 0:  # LEFT
         yellow.y -= VELOCITY
-    if keys[pygame.K_s] and yellow.bottom - VELOCITY < HEIGHT: # LEFT
+    if keys[pygame.K_s] and yellow.bottom - VELOCITY < HEIGHT:  # LEFT
         yellow.y += VELOCITY
+
 
 def red_handle_movement(keys, red):
     
-    if keys[pygame.K_LEFT] and red.left - VELOCITY > 0: # LEFT
+    if keys[pygame.K_LEFT] and red.left - VELOCITY > 0:  # LEFT
         red.x -= VELOCITY
-    if keys[pygame.K_RIGHT] and red.right + VELOCITY < (WIDTH - 10)/2: # LEFT
+    if keys[pygame.K_RIGHT] and red.right + VELOCITY < (WIDTH - 10)/2:  # LEFT
         red.x += VELOCITY
-    if keys[pygame.K_UP] and red.top - VELOCITY > 0: # LEFT
+    if keys[pygame.K_UP] and red.top - VELOCITY > 0:  # LEFT
         red.y -= VELOCITY
-    if keys[pygame.K_DOWN] and red.bottom + VELOCITY < HEIGHT: # LEFT
+    if keys[pygame.K_DOWN] and red.bottom + VELOCITY < HEIGHT:  # LEFT
         red.y += VELOCITY
+
 
 def handle_bullets(yellow_bullets, red_bullets, yellow, red):
     # przesuwanie pocisków ale na razie bez sprites
@@ -97,8 +100,7 @@ def handle_bullets(yellow_bullets, red_bullets, yellow, red):
             red_bullets.remove(bullet)
 
 
-
-def main() :
+def main():
 
     red = pygame.Rect(100, 300, FIRST_SPACESHIP.get_width(), FIRST_SPACESHIP.get_height())
     yellow = pygame.Rect(800, 300, SECOND_SPACESHIP.get_width(), FIRST_SPACESHIP.get_height())
@@ -147,7 +149,6 @@ def main() :
         if winner_text != "":
             draw_winner(winner_text)
             break
-
 
         keys_pressed = pygame.key.get_pressed()
         yellow_handle_movement(keys_pressed, yellow)
